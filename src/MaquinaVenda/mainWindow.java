@@ -1,5 +1,7 @@
 package MaquinaVenda;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -14,6 +16,7 @@ import javax.swing.JTextField;
 
 public class mainWindow extends JFrame implements ActionListener,FocusListener{
 	private JLabel imgMaquina;
+	private JLabel gasto = new JLabel();
 	private JButton buttonClose;
 	private JButton buttonInsert;
 	private JTextField textValue=new JTextField();
@@ -30,6 +33,11 @@ public void InicializaComponentes(){
 		this.setFocusable(true);
 		this.setUndecorated(true);
 		
+		gasto.setText("Valor pago");
+		gasto.setBounds(140,280,200,100);
+		gasto.setFont(new Font ("Monotype Corsiva", Font.BOLD,25));
+		gasto.setForeground(Color.white);
+		this.add(gasto);
 		
 		buttonClose=new JButton(new ImageIcon("img/buttonClose.png"));
 		buttonClose.setBounds(350,0,50,50);
@@ -50,8 +58,11 @@ public void InicializaComponentes(){
 		imgMaquina.setBounds(0,0,400,400);
 		this.add(imgMaquina);
 		
+		
+		
 		this.show();
-		 
+		
+	
 		
 		
 }
@@ -78,7 +89,10 @@ public mainWindow() {
 			this.dispose();
 		}
 		if(e.getSource()== buttonInsert) {
-			
+			String texto = textValue.getText();
+			if(texto.equals("") || texto.equals("Insira uma moeda(Entre 10$ e 25$ cents):")) {
+				JOptionPane.showMessageDialog(null, "Por favor, insira uma moeda!");
+			}
 			int moeda;
 			int valor;
 			
@@ -93,12 +107,13 @@ public mainWindow() {
 					moeda = Integer.parseInt(textValue.getText());
 					valor=moeda;
 					soma+=valor;
+					gasto.setText("R$: 0," +soma);
 					if(soma==45) {
-						JOptionPane.showMessageDialog(null, "Coca-Cola comprada com sucesso!valor da compra $: 0,45");
+						JOptionPane.showMessageDialog(null, "Coca-Cola comprada com sucesso!, valor da compra $: 0,45");
 						soma=0;
 					}
 					if(soma>45) {
-						JOptionPane.showMessageDialog(null, "Coca-Cola comprada com sucesso! valor da compra $: 0,"+soma+ ", valor perdido $: 0,"+(soma-45));
+						JOptionPane.showMessageDialog(null, "Coca-Cola comprada com sucesso!, valor da compra $: 0,"+soma+ ", valor perdido $: 0,"+(soma-45));
 						soma=0;
 					}
 					break;
